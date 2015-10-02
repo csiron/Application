@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+<html>
 <head>
-<title> Craig Sirons Page 1 </title>
+  <<meta charset ="utf-8">
+  <title> Craig Sirons Page 1 </title>
 <body>
 <h1> Craig Sirons page 1 <h1>
+<p>Click here to visit page 2 <a href="page2.html"></a></p>
+<p>Click here to see a funny picture <a href="https://s3.amazonaws.com/csiron-bucket-1/toga.png"=></a></p>
