@@ -10,7 +10,7 @@ $result = $client->describeDBInstances(array(
     'DBInstanceIdentifier' => 'csironITMO444db',
 ));
 
-$endpoint = "";
+$endpoint = "csironitmo444db.cvo4ncpf9nfa.us-east-1.rds.amazonaws.com:3306";
 
 echo "begin database";
 echo "Hello world"; 
