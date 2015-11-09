@@ -57,7 +57,7 @@ $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
 print "============\n". $endpoint . "================\n";
 $link = mysqli_connect($endpoint,"root","letmein22","3306") or die("Error " . mysqli_error($link)); 
 echo "Here is the result: " . $link;
-$sql = "CREATE TABLE comments 
+$sql = "CREATE TABLE customerrecords 
 (
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 Uname VARCHAR(32),
