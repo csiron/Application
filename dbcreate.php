@@ -1,37 +1,68 @@
 <?php
-
+// Start the session^M
 require 'vendor/autoload.php';
-use Aws\Rds\RdsClient;
-$client = RdsClient::factory(array(
-'region'  => 'us-east-1'
-));
-
-$result = $client->describeDBInstances(array(
+$rds = new Aws\Rds\RdsClient([
+    'version' => 'latest',
+    'region'  => 'us-east-1'
+]);
+$result = $rds->createDBInstance([
+    'AllocatedStorage' => 10,
+    #'AutoMinorVersionUpgrade' => true || false,
+    #'AvailabilityZone' => '<string>',
+    #'BackupRetentionPeriod' => <integer>,
+   # 'CharacterSetName' => '<string>',
+   # 'CopyTagsToSnapshot' => true || false,
+   # 'DBClusterIdentifier' => '<string>',
+    'DBInstanceClass' => 'db.t1.micro', // REQUIRED
+    'DBInstanceIdentifier' => 'csironITMO444db', // REQUIRED
+    'DBName' => 'customerrecords',
+    #'DBParameterGroupName' => '<string>',
+    #'DBSecurityGroups' => ['<string>', ...],
+    #'DBSubnetGroupName' => '<string>',
+    'Engine' => 'MySQL', // REQUIRED
+    'EngineVersion' => '5.5.41',
+    #'Iops' => <integer>,
+    #'KmsKeyId' => '<string>',
+   # 'LicenseModel' => '<string>',
+  'MasterUserPassword' => 'letmein22',
+    'MasterUsername' => 'root',
+    #'MultiAZ' => true || false,
+    #'OptionGroupName' => '<string>',
+    #'Port' => <integer>,
+    #'PreferredBackupWindow' => '<string>',
+    #'PreferredMaintenanceWindow' => '<string>',
+    'PubliclyAccessible' => true,
+    #'StorageEncrypted' => true || false,
+    #'StorageType' => '<string>',
+   # 'Tags' => [
+   #     [
+   #         'Key' => '<string>',
+   #         'Value' => '<string>',
+   #     ],
+        // ...
+   # ],
+    #'TdeCredentialArn' => '<string>',
+    #'TdeCredentialPassword' => '<string>',
+   # 'VpcSecurityGroupIds' => ['<string>', ...],
+]);
+print "Create RDS DB results: \n";
+# print_r($rds);
+$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'csironITMO444db',
+]);
+// Create a table 
+$result = $rds->describeDBInstances([
     'DBInstanceIdentifier' => 'csironITMO444db',
-));
-
-$endpoint = "csironitmo444db.cvo4ncpf9nfa.us-east-1.rds.amazonaws.com:3306";
-
-echo "begin database";
-echo "Hello world"; 
-$link = mysqli_connect("csironitmo444db.cvo4ncpf9nfa.us-east-1.rds.amazonaws.com","root","letmein22","3306") or die("Error " . mysqli_error($link)); 
-
+]);
+$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
+print "============\n". $endpoint . "================\n";
+$link = mysqli_connect($endpoint,"root","letmein22","3306") or die("Error " . mysqli_error($link)); 
 echo "Here is the result: " . $link;
-
-
 $sql = "CREATE TABLE comments 
 (
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-Uname VARCHAR(20),
-Email VARCHAR(20),
-Phone VARCHAR(20),
-RawURL VARCHAR(256),
-FinishedURL VARCHAR(256),
-ImageFileName VARCHAR(256),
-level TinyInt(0 1 2) pending finished or error,
-time timestamp DEFAULT CURRENT_TIMESTAMP,
+PosterName VARCHAR(32),
+Title VARCHAR(32),
+Content VARCHAR(500)
 )";
-
 $con->query($sql);
-
 ?>
