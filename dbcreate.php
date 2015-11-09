@@ -1,5 +1,6 @@
 <?php
 
+require 'vendor/autoload.php';
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
 'region'  => 'us-east-1'
@@ -13,7 +14,7 @@ $endpoint = "";
 
 echo "begin database";
 echo "Hello world"; 
-$link = mysqli_connect("csironITMO444db","root","letmein22","3306") or die("Error " . mysqli_error($link)); 
+$link = mysqli_connect("csironitmo444db.cvo4ncpf9nfa.us-east-1.rds.amazonaws.com","root","letmein22","3306") or die("Error " . mysqli_error($link)); 
 
 echo "Here is the result: " . $link;
 
