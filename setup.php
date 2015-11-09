@@ -37,7 +37,7 @@ $client = S3Client::factory();
  For more information about bucket name restrictions, see:
  http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
 */
-$bucket = uniqid("php-sdk-sample-", true);
+$bucket = uniqid("php-cjs", true);
 echo "Creating bucket named {$bucket}\n";
 $result = $client->createBucket(array(
     'Bucket' => $bucket
