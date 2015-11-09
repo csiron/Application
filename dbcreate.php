@@ -1,5 +1,17 @@
 <?php
-//conection: 
+
+use Aws\Rds\RdsClient;
+$client = RdsClient::factory(array(
+'region'  => 'us-east-1'
+));
+
+$result = $client->describeDBInstances(array(
+    'DBInstanceIdentifier' => 'csironITMO444db',
+));
+
+$endpoint = "";
+
+echo "begin database";
 echo "Hello world"; 
 $link = mysqli_connect("csironITMO444db","root","letmein22","3306") or die("Error " . mysqli_error($link)); 
 
@@ -22,4 +34,3 @@ time timestamp DEFAULT CURRENT_TIMESTAMP,
 $con->query($sql);
 
 ?>
-
