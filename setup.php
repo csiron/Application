@@ -19,7 +19,10 @@
 require 'vendor/autoload.php';
 
 use Aws\S3\S3Client;
-
+$s3 = new Aws\S3\S3Client([
+    'version' => 'latest',
+    'region'  => 'us-east-1'
+]);
 /*
  If you instantiate a new client for Amazon Simple Storage Service (S3) with
  no parameters or configuration, the AWS SDK for PHP will look for access keys
