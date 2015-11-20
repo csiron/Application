@@ -6,15 +6,15 @@ session_start();
 print $_POST['useremail'];
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
-print '<pre>';
+echo '<pre>';
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
-    print "File is valid, and was successfully uploaded.\n";
+    echo "File is valid, and was successfully uploaded.\n";
 } else {
-    print "Possible file upload attack!\n";
+    echo "Possible file upload attack!\n";
 }
-print 'Here is some more debugging info:';
+echo 'Here is some more debugging info:';
 print_r($_FILES);
-print "</pre>";
+echo "</pre>";
 require 'vendor/autoload.php';
 use Aws\S3\S3Client;
 #$client = S3Client::factory();
@@ -75,7 +75,7 @@ if (mysqli_connect_errno()) {
 }
 /* Prepared statement, stage 1: prepare */
 if (!($stmt = $link->prepare("INSERT INTO items (id, email,phone,filename,s3rawurl,s3finishedurl,status,issubscribed) VALUES (NULL,?,?,?,?,?,?,?)"))) {
-    print "Prepare failed: (" . $link->errno . ") " . $link->error;
+    echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 $email = $_POST['useremail'];
 $phone = $_POST['phone'];
@@ -86,7 +86,7 @@ $status =0;
 $issubscribed=0;
 $stmt->bind_param("sssssii",$email,$phone,$filename,$s3rawurl,$s3finishedurl,$status,$issubscribed);
 if (!$stmt->execute()) {
-    print "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
 printf("%d Row inserted.\n", $stmt->affected_rows);
 /* explicit close recommended */
