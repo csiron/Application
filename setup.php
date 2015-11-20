@@ -67,8 +67,6 @@ Phone VARCHAR(32),
 RawS3 VARCHAR(256),
 finishedS3 VARCHAR(256),
 filename VARCHAR(256),
-state TinyInt(0 1 2) pending finished or error,
-time timestamp DEFAULT CURRENT_TIMESTAMP,
 )";
 $con->query($sql);
 ?>
