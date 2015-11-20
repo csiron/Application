@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html>
+<body>
+
 <?php
 // Start the session^M
 require 'vendor/autoload.php';
@@ -70,3 +74,5 @@ filename VARCHAR(256),
 )";
 $con->query($sql);
 ?>
+</body>
+</html>
