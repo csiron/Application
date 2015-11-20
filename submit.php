@@ -41,7 +41,7 @@ $client->waitUntilBucketExists(array('Bucket' => $bucket));
 #    'SourceFile' => $uploadfile 
 #));
 # PHP version 3
-$result = s3$->putObject([
+$result = $s3->putObject([
     'ACL' => 'public-read',
     'Bucket' => $bucket,
    'Key' => $uploadfile
