@@ -9,22 +9,17 @@ $email = $_POST["email"];
 echo $email;
 require 'vendor/autoload.php';
 
-use Aws\Rds\RdsClient;
-$client = RdsClient::factory(array(
+rds = new Aws\Rds\RdsClient([
+'version' => 'latest',
 'region'  => 'us-east-1'
-));
+]);
 
-$result = s3$->describeDBInstances(array(
-    'DBInstanceIdentifier' => 'csironITMO444db',
-));
+$result = s3$->describeDBInstances([
+    'DBInstanceIdentifier' => 'mp1-cjs-db',
+]);
 
-$endpoint = "";
+$endpoint = $result['dbInstances'][0]['Endpoint']['Address'];
 
-foreach ($result->getPath('DBInstances/*/Endpoint/Address') as $ep) {
-    // Do something with the message
-    echo "============". $ep . "================";
-    $endpoint = $ep;
-}   
 //echo "begin database";
 $link = mysqli_connect($endpoint,"root","letmein22","csironITMO444db") or die("Error " . mysqli_error($link));
 
@@ -34,8 +29,10 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
+$results = $link->insert_id;
+
 //below line is unsafe - $email is not checked for SQL injection -- don't do this in real life or use an ORM instead
-$link->real_query("SELECT * FROM customerrecords WHERE email = '$email'");
+$link->real_query("SELECT * FROM comments WHERE email = '$email'");
 //$link->real_query("SELECT * FROM items");
 $res = $link->use_result();
 echo "Result set order...\n";
