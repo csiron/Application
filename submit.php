@@ -1,7 +1,3 @@
-<!DOCTYPE html>
-<html>
-<body>
-
 <?php
 // Start the session
 session_start();
@@ -62,7 +58,7 @@ $rds = new Aws\Rds\RdsClient([
     'region'  => 'us-east-1'
 ]);
 $result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'csironITMO444db',
+    'DBInstanceIdentifier' => 'mp1-cjs-db',
     #'Filters' => [
     #    [
     #        'Name' => '<string>', // REQUIRED
@@ -76,7 +72,7 @@ $result = $rds->describeDBInstances([
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address']
     print "============\n". $endpoint . "================";^M
 //echo "begin database";^M
-$link = mysqli_connect($endpoint,"root","letmein22","customerrecords") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"root","letmein22","csironITMO444db") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
