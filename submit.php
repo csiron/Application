@@ -30,9 +30,9 @@ $snsSetTopicAttr = $sn->setTopicAttributes([
     'TopicArn' => $cjsArn, // REQUIRED
 ]);
 
-+$image = new Imagick(basename($_FILES['userfile']['name']);
-+$image->thumbnailImage(100,0);
-+echo $image;
+$image = new Imagick(basename($_FILES['userfile']['name']);
+$image->thumbnailImage(100,0);
+echo $image;
 
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
