@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <html>
 <head><title>Hello user</title>
-<link rel="stylesheet" type="text/css" href="mystyle.css">
+<link rel="stylesheet" type="text/css" href="cjsmp2.css">
 </head>
 <body>
 
