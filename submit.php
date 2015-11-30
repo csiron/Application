@@ -73,7 +73,7 @@ $rds = new Aws\Rds\RdsClient([
 ]);
 
 $result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'cjs-mp2',
+    'DBInstanceIdentifier' => 'mp1-cjs-db',
     
 ]);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
