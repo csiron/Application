@@ -67,10 +67,10 @@ $cjsthumb = $s3->putObject([
    'Key' => $uploadfile,
    'SourceFile' => $uploadfile,
 ]);
-$url = $result['ObjectURL'];
-echo $url;
-$finurl = $cthumb['ObjectURL'];
-echo $finurl;
+$rawurl = $result['ObjectURL'];
+echo $rawurl;
+$finishedurl = $cthumb['ObjectURL'];
+echo $finishedurl;
 $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
     'region'  => 'us-east-1'
@@ -101,12 +101,12 @@ if($num_rows[0] > 0){
   $uname = $_POST['username'];
   $email = $_POST['useremail'];
   $phone = $_POST['phone'];
-  $s3rawurl = $url; //  $result['ObjectURL']; from above
+  $s3rawurl = $rawurl; //  $result['ObjectURL']; from above
   $filename = basename($_FILES['userfile']['name']);
-  $s3finishedurl = $finurl;
+  $s3finishedurl = $finishedurl;
   $status =0;
   $issubscribed=0;
-  mysqli_query($link, "INSERT INTO comments (ID, uname,email,phone,rs3URL,fs3URL,jpgfile,state,date) VALUES (NULL, '$uname', '$email', '$phone', '$s3rawurl', '$s3finishedurl', '$filename', '$status', NULL)");
+  mysqli_query($link, "INSERT INTO comments (ID, uname,email,phone,rs3URL,fs3URL,jpgfile,state,date) VALUES (NULL, '$uname', '$email', '$phone', '$rawurl', '$finishedurl', '$filename', '$status', NULL)");
   $results = $link->insert_id;
 
   $subArns = $sn->listSubscriptionsByTopic([
@@ -128,12 +128,12 @@ else{
   $uname = $_POST['username'];
   $email = $_POST['useremail'];
   $phone = $_POST['phone'];
-  $s3rawurl = $url; //  $result['ObjectURL']; from above
+  $s3rawurl = $rawurl; //  $result['ObjectURL']; from above
   $filename = basename($_FILES['userfile']['name']);
-  $s3finishedurl = $finurl;
+  $s3finishedurl = $finishedurl;
   $status =0;
   $issubscribed=0;
-  mysqli_query($link, "INSERT INTO comments (ID, uname,email,phone,rs3URL,fs3URL,jpgfile,state,date) VALUES (NULL, '$uname', '$email', '$phone', '$s3rawurl', '$s3finishedurl', '$filename', '$status', NULL)");
+  mysqli_query($link, "INSERT INTO comments (ID, uname,email,phone,rs3URL,fs3URL,jpgfile,state,date) VALUES (NULL, '$uname', '$email', '$phone', '$rawurl', '$finishedurl', '$filename', '$status', NULL)");
   $results = $link->insert_id;
   $subArns = $sn->listSubscriptionsByTopic([
   'TopicArn' => $cjsArn,
