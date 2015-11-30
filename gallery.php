@@ -1,5 +1,6 @@
 <html>
 <head><title>Gallery</title>
+<link rel="stylesheet" type="text/css" href="cjsmp2.css">
 </head>
 <body>
 
