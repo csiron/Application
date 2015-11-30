@@ -1,5 +1,5 @@
 <?php
-// Start the session^M
+session_start();
 require 'vendor/autoload.php';
 $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
