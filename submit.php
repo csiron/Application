@@ -30,6 +30,10 @@ $snsSetTopicAttr = $sn->setTopicAttributes([
     'TopicArn' => $cjsArn, // REQUIRED
 ]);
 
++$image = new Imagick(basename($_FILES['userfile']['name']);
++$image->thumbnailImage(100,0);
++echo $image;
+
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 echo '<pre>';
@@ -54,14 +58,14 @@ $result = $s3->putObject([
     'Key' => $uploadfile,
     'SourceFile' => $uploadfile,
 ]);  
-echo 'finurl'.$finurl;
-$tres = thumb_create( $_FILES['userfile']['name'],50,50));
-print 'tress'.$tres;
+
+echo 'finished url'.$s3finishedurl;
+
 $cjsthumb = $s3->putObject([
    'ACL' => 'public-read-write',
    'Bucket' => $bucket,
-   'Key' => $tres,
-   'SourceFile' => $tres,
+   'Key' => $uploadfile,
+   'SourceFile' => $uploadfile,
 ]);
 $url = $result['ObjectURL'];
 echo $url;
