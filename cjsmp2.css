@@ -11,5 +11,10 @@
 	body{
 		background-color: purple;
 	}
+	form {
+		color: yellow;
+		font-family: 'Bitter', serif;;
+	}
+
 </style>
 </head>
