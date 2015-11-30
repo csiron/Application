@@ -117,8 +117,8 @@ if($num_rows[0] > 0){
 else{
 
   $resultSubs = $sn->subscribe([
-     'Endpoint' => $phone,
-     'Protocol' => 'sms', // REQUIRED
+     'Endpoint' => $email,
+     'Protocol' => 'email', // REQUIRED
      'TopicArn' => $cjsArn, // REQUIRED
   ]);
   $uname = $_POST['username'];
