@@ -73,13 +73,13 @@ $rds = new Aws\Rds\RdsClient([
 ]);
 
 $result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'mp1-rca',
+    'DBInstanceIdentifier' => 'cjs-mp2',
     
 ]);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
 
 //echo "begin database";^M
-$link = mysqli_connect($endpoint,"controller","letmein888","db444Name") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"root","letmein22","csironITMO444db") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
