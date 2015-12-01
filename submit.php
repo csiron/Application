@@ -174,5 +174,6 @@ function thumb_create($file, $width , $height ) {
           return $file;
   }
 };
-   
+$_SESSION('gallerySession') = TRUE;   
+$link->close();
 ?>
