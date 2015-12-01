@@ -1,8 +1,11 @@
 <?php
+
 // Start the session
 session_start();
+
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
+
 require 'vendor/autoload.php';
 $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
@@ -45,9 +48,9 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
 echo 'Here is some more debugging info:';
 print_r($_FILES);
 print "</pre>";
-$bucket = uniqid("php-cjs-",false);
+$bucket = uniqid("php-cjs",false);
 $result = $s3->createBucket([
-    'ACL' => 'public-read',
+    'ACL' => 'public-read-write',
     'Bucket' => $bucket,
 ]);
 print_r($result);
