@@ -4,7 +4,6 @@
 <link rel="stylesheet" type="text/css" href="cjsmp2.css">
 </head>
 <body>
-<h1>
 <!-- The data encoding type, enctype, MUST be specified as below -->
 <form enctype="multipart/form-data" action="submit.php" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
@@ -27,6 +26,5 @@ Enter Email of user for gallery to browse: <input type="email" name="email">
 <input type="submit" value="Load Gallery" />
 </form>
 
-</h1>
 </body>
 </html>
