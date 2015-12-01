@@ -5,24 +5,7 @@ $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
     'region'  => 'us-east-1'
 ]);
-$result = $rds->createDBInstance([
-    'AllocatedStorage' => 10,
-    'DBInstanceClass' => 'db.t1.micro', // REQUIRED
-    'DBInstanceIdentifier' => 'mp1-cjs-db', // REQUIRED
-    'DBName' => 'csironITMO444db',
-    'Engine' => 'MySQL', // REQUIRED
-    'EngineVersion' => '5.5.41',
-  'MasterUserPassword' => 'letmein22',
-    'MasterUsername' => 'root',
-    'PubliclyAccessible' => true,
-]);
 
-print "Create RDS DB results: \n";
-# print_r($rds);
-$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'mp1-cjs-db',
-]);
-
-// Create a table 
 $result = $rds->describeDBInstances([
     'DBInstanceIdentifier' => 'mp1-cjs-db',
 ]);
@@ -46,6 +29,5 @@ state TINYINT(3),
 date TIMESTAMP):;
 )";
 
-$con->query($sql);
 mysqli_close($link);
 ?>
