@@ -104,9 +104,9 @@ if($num_rows[0] > 0){
   $uname = $_POST['username'];
   $email = $_POST['useremail'];
   $phone = $_POST['phone'];
-  $s3rawurl = $rawurl; //  $result['ObjectURL']; from above
+  $RawS3 = $rawurl; //  $result['ObjectURL']; from above
   $filename = basename($_FILES['userfile']['name']);
-  $s3finishedurl = $finishedurl;
+  $finishedS3 = $finishedurl;
   $status =0;
   $issubscribed=0;
   mysqli_query($link, "INSERT INTO comments (ID, uname,email,phone,rs3URL,fs3URL,jpgfile,state,date) VALUES (NULL, '$uname', '$email', '$phone', '$rawurl', '$finishedurl', '$filename', '$status', NULL)");
@@ -131,9 +131,9 @@ else{
   $uname = $_POST['username'];
   $email = $_POST['useremail'];
   $phone = $_POST['phone'];
-  $s3rawurl = $rawurl; //  $result['ObjectURL']; from above
+  $RawS3 = $rawurl; //  $result['ObjectURL']; from above
   $filename = basename($_FILES['userfile']['name']);
-  $s3finishedurl = $finishedurl;
+  $finishedS3 = $finishedurl;
   $status =0;
   $issubscribed=0;
   mysqli_query($link, "INSERT INTO comments (ID, uname,email,phone,rs3URL,fs3URL,jpgfile,state,date) VALUES (NULL, '$uname', '$email', '$phone', '$rawurl', '$finishedurl', '$filename', '$status', NULL)");
