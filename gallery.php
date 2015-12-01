@@ -41,9 +41,11 @@ $results = $link->insert_id;
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
-    echo "<img src =\" " . $row['s3rawurl'] . "\" /><img src =\"" .$row['s3finishedurl'] . "\"/>";
-echo $row['id'] . "Email: " . $row['email'];
+if ($_SESSION['gallerySession']){
+    echo "<img src =\"" .$row['finishedS3'] . "\"/>";
 }
+else {
+    echo "<img src =\"" .$row['RawS3'] . "\"/>
 $link->close();
 ?>
 </body>
