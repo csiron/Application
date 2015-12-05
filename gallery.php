@@ -10,6 +10,8 @@ $email = $_POST["email"];
 echo $email;
 require 'vendor/autoload.php';
 
+use Aws\Rds\RdsClient;
+
 $rds = new Aws\Rds\RdsClient([
 'version' => 'latest',
 'region'  => 'us-east-1'
