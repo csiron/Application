@@ -39,7 +39,6 @@ while ($row = $res->fetch_assoc()) {
 		echo "<img src =\" " . $row['finishedS3'] . "\" /> <br />";
 	}
 	else {
-		echo $row['RawurlTable'];
 		echo "<img src =\" " . $row['RawS3'] . "\" /> <br />";
 	}
 }
