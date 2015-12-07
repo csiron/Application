@@ -35,10 +35,13 @@ if($res =$link->query($query))
   # printf("Select returned %d rows.\n", $res->num_rows);
 }
 while ($row = $res->fetch_assoc()) {
-  echo $row['email'];
-  printf("\n");
-    echo "<img src =\" " . $row['rs3URL'] . "\" /><img src =\"" .$row['fs3URL'] . "\"/>";
-
+	if($_SESSION['gallery']({
+		echo "<img src =\" " . $row['finishedS3'] . "\" /> <br />";
+	}
+	else {
+		echo $row['RawurlTable'];
+		echo "<img src =\" " . $row['RawS3'] . "\" /> <br />";
+	}
 }
 $link->close();
 ?>
