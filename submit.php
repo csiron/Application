@@ -1,43 +1,40 @@
+<html>
+<body>
+<link rel="stylesheet" type="text/css" href="cjsmp2.css">
 <?php
-
 // Start the session
 session_start();
-
 // In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
 // of $_FILES.
-
 require 'vendor/autoload.php';
-use Aws\S3\S3Client;
+
 $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
     'region'  => 'us-east-1'
 ]);
-
 echo $_POST['useremail'];
 $email = $_POST['useremail'];
 $sn = new Aws\Sns\SnsClient([
         'version' => 'latest',
         'region' => 'us-east-1'
 ]);
-
-$Model1 = $sn->listTopics();
-  
-$cjsArn = $Model1['Topics'][0]['TopicArn'];
-
-$snsARN = $sn->createTopic([
+$resultsARN = $sn->createTopic([
         'Name' => 'cjsmp2',
 ]);
-
-$snsSetTopicAttr = $sn->setTopicAttributes([
+print("List All Platform Applications:\n");
+$Model = $sn->listTopics();
+foreach ($Model1['Topics'] as $App)
+  {
+    print($App['TopicArn'] . "\n");
+  }
+  print("\n");
+  
+  $mp2Arn = $Model['Topics'][0]['TopicArn'];
+$resultsSetTopicAttr = $sn->setTopicAttributes([
     'AttributeName' => 'DisplayName', // REQUIRED
-    'AttributeValue' => 'cjsmp2topic',
-    'TopicArn' => $cjsArn, // REQUIRED
+    'AttributeValue' => 'itmo444mp2',
+    'TopicArn' => $mp2Arn, // REQUIRED
 ]);
-
-$image = new Imagick(basename($_FILES['userfile']['name'])
-$image->thumbnailImage(100,0);
-echo $image;
-
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 echo '<pre>';
@@ -50,42 +47,52 @@ echo 'Here is some more debugging info:';
 print_r($_FILES);
 print "</pre>";
 $bucket = uniqid("php-cjs",false);
+
 $result = $s3->createBucket([
     'ACL' => 'public-read-write',
     'Bucket' => $bucket,
 ]);
 print_r($result);
-$client->waitUntilBucketExists(array('Bucket' => $bucket));
+
 $result = $s3->putObject([
-    'ACL' => 'public-read',
+    'ACL' => 'public-read-write',
     'Bucket' => $bucket,
-    'Key' => $uploadfile,
-    'SourceFile' => $uploadfile,
-]);  
-
-echo 'finished url'.$s3finishedurl;
-
-$cjsthumb = $s3->putObject([
-   'ACL' => 'public-read-write',
-   'Bucket' => $bucket,
    'Key' => $uploadfile,
    'SourceFile' => $uploadfile,
+]);  
+$uploaddirT = '/tmp/';
+$uploadfileT = $uploaddirT . basename($_FILES['userfile']['name']);
+$file = $uploadfile;
+$newfile = '/tmp/Thumb.png';
+if(!copy($file, $newfile)){
+        echo "falled to copy";
+}
+$image = new Imagick($newfile);
+$image->thumbnailImage(50, 0);
+$image->writeImage($newfile);
+
+echo $uploadfileT;
+echo $_FILES['userfile']['tmp_name'];
+$cthumb = $s3->putObject([
+  'ACL' => 'public-read-write',
+  'Bucket' => $bucket,
+    'Key' => $newfile,
+    'SourceFile' => $newfile,
 ]);
-$rawurl = $result['ObjectURL'];
-echo $rawurl;
-$finishedurl = $cthumb['ObjectURL'];
-echo $finishedurl;
+$url = $result['ObjectURL'];
+echo $Rawurl;
+$finurl = $cthumb['ObjectURL'];
+echo $finshedurl;
 $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
     'region'  => 'us-east-1'
 ]);
-
 $result = $rds->describeDBInstances([
     'DBInstanceIdentifier' => 'mp1-cjs-db',
     
 ]);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
-
+print "============\n". $endpoint . "================\n";
 //echo "begin database";^M
 $link = mysqli_connect($endpoint,"root","letmein22","csironITMO444db") or die("Error " . mysqli_error($link));
 /* check connection */
@@ -94,65 +101,66 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
-mysqli_query($link, "SELECT Count(*) FROM comments WHERE email = '$email'");
+mysqli_query($link, "SELECT Count(*) FROM comments WHERE email = '$Email'");
 $results = $link->insert_id;
 
-$query = "SELECT Count(*) FROM comments WHERE email = '$email'";
+$query = "SELECT Count(*) FROM comments WHERE email = '$Email'";
 $res =$link->query($query);
 $num_rows = mysqli_fetch_row($res);
 
 if($num_rows[0] > 0){
-  $uname = $_POST['username'];
-  $email = $_POST['useremail'];
-  $phone = $_POST['phone'];
-  $RawS3 = $rawurl; //  $result['ObjectURL']; from above
+
+  $Uname = $_POST['username'];
+  $Email = $_POST['useremail'];
+  $Phone = $_POST['phone'];
+  $RawS3 = $Rawurl; //  $result['ObjectURL']; from above
   $filename = basename($_FILES['userfile']['name']);
-  $finishedS3 = $finishedurl;
+  $finishedS3 = $Finshedurl;
   $status =0;
   $issubscribed=0;
-  mysqli_query($link, "INSERT INTO comments (ID, uname,email,phone,rs3URL,fs3URL,jpgfile,state,date) VALUES (NULL, '$uname', '$email', '$phone', '$rawurl', '$finishedurl', '$filename', '$status', NULL)");
+  mysqli_query($link, "INSERT INTO comments (ID, Uname,Email,Phone,RawS3url,finishedS3url,jpgfile,state,date) VALUES (NULL, '$Uname', '$Email', '$Phone', '$Rawurl', '$finishedurl', '$filename', '$status', NULL)");
   $results = $link->insert_id;
 
-  $subArns = $sn->listSubscriptionsByTopic([
-    'TopicArn' => $cjsArn,
+  $subscriberArns = $sn->listSubscriptionsByTopic([
+    'TopicArn' => $mp2Arn,
   ]);
-
-  $resultsPublish = $sn->publish([
-    'Message' => 'A user has submitted an image',
-    'TopicArn' => $cjsArn,
+  print $subscriberArns;
+  $mp2Publish = $sn->publish([
+    'Message' => 'An image has been posted to the gallery',
+    'TopicArn' => $mp2Arn,
     ]);
-}
-else{
+}else{
 
-  $resultSubs = $sn->subscribe([
+  $resultSub = $sn->subscribe([
      'Endpoint' => $email,
      'Protocol' => 'email', // REQUIRED
-     'TopicArn' => $cjsArn, // REQUIRED
+     'TopicArn' => $mp2Arn, // REQUIRED
   ]);
   $uname = $_POST['username'];
-  $email = $_POST['useremail'];
+  #$email = $_POST['useremail'];
   $phone = $_POST['phone'];
-  $RawS3 = $rawurl; //  $result['ObjectURL']; from above
+  $s3rawurl = $Rawurl; //  $result['ObjectURL']; from above
   $filename = basename($_FILES['userfile']['name']);
-  $finishedS3 = $finishedurl;
+  $s3finishedurl = $finishedurl;
   $status =0;
   $issubscribed=0;
-  mysqli_query($link, "INSERT INTO comments (ID, uname,email,phone,rs3URL,fs3URL,jpgfile,state,date) VALUES (NULL, '$uname', '$email', '$phone', '$rawurl', '$finishedurl', '$filename', '$status', NULL)");
+  mysqli_query($link, "INSERT INTO comments (ID, Uname,Email,Phone,RawS3,finishedS3,jpgfile,state,date) VALUES (NULL, '$Uname', '$Email', '$Phone', '$Rawurl', '$finishedurl', '$filename', '$status', NULL)");
   $results = $link->insert_id;
-  $subArns = $sn->listSubscriptionsByTopic([
-  'TopicArn' => $cjsArn,
+  $resultsubArns = $sn->listSubscriptionsByTopic([
+  'TopicArn' => $AppArn,
   ]);
 
-  $resultsPublish = $sn->publish([
-  'Message' => 'An image has been posted to the gallery',
-  'TopicArn' => $cjsArn,
+  $resulstPub = $sn->publish([
+  'Message' => 'An image has been uploaded',
+  'TopicArn' => $AppArn,
   ]);
 }
-
   header('Location: gallery.php'); 
+
 function thumb_create($file, $width , $height ) {
   try
   {
+
           $image = $file;
   
           $im = new Imagick();
@@ -164,7 +172,7 @@ function thumb_create($file, $width , $height ) {
           $im->thumbnailImage( $width, $height );
   
           $im->writeImage( $file );
-
+  
           $im->destroy();
           return 'THUMB_'.$file;
           
@@ -175,6 +183,9 @@ function thumb_create($file, $width , $height ) {
           return $file;
   }
 };
-$_SESSION('gallerySession') = TRUE;   
-$link->close();
+   
 ?>
+</body>
+
+
+</html>
