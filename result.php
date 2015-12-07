@@ -58,12 +58,12 @@ if (mysqli_connect_errno()) {
 $Uname = $_POST['username'];
 $Email = $_POST['useremail'];
 $Phone = $_POST['phone'];
-$RawS3 = $url; //  $result['ObjectURL']; from above
+$RawS3url = $Rawurl; //  $result['ObjectURL']; from above
 $filename = basename($_FILES['userfile']['name']);
-$finishedS3 = "none";
+$finishedS3url = "none";
 $status =0;
 $issubscribed=0;
-mysqli_query($link, "INSERT INTO comments (ID, Uname,Email,Phone,RawS3,filename,finishedS3,state,date) VALUES (NULL, '$Uname', '$Email', '$Phone', '$RawS3', '$finishedS3', '$filename', '$status', NULL)");
+mysqli_query($link, "INSERT INTO comments (ID, Uname,Email,Phone,RawS3,filename,finishedS3,state,date) VALUES (NULL, '$Uname', '$Email', '$Phone', '$RawS3url', '$finishedS3url', '$filename', '$status', NULL)");
 $results = $link->insert_id;
 echo $link->error;
 echo $results;
