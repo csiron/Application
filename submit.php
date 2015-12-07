@@ -149,12 +149,12 @@ if($num_rows[0] > 0){
   mysqli_query($link, "INSERT INTO comments (ID, Uname,Email,Phone,RawS3,finishedS3,jpgfile,state,date) VALUES (NULL, '$Uname', '$Email', '$Phone', '$Rawurl', '$finishedurl', '$filename', '$status', NULL)");
   $results = $link->insert_id;
   $resultsubArns = $sn->listSubscriptionsByTopic([
-  'TopicArn' => $AppArn,
+  'TopicArn' => $mp2Arn,
   ]);
 
   $resulstPub = $sn->publish([
   'Message' => 'An image has been uploaded',
-  'TopicArn' => $AppArn,
+  'TopicArn' => $mp2Arn,
   ]);
 }
   header('Location: gallery.php'); 
