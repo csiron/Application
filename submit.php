@@ -7,6 +7,7 @@ session_start();
 // of $_FILES.
 
 require 'vendor/autoload.php';
+use Aws\S3\S3Client;
 $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
     'region'  => 'us-east-1'
@@ -33,7 +34,7 @@ $snsSetTopicAttr = $sn->setTopicAttributes([
     'TopicArn' => $cjsArn, // REQUIRED
 ]);
 
-$image = new Imagick(basename($_FILES['userfile']['name']);
+$image = new Imagick(basename($_FILES['userfile']['name'])
 $image->thumbnailImage(100,0);
 echo $image;
 
