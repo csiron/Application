@@ -25,9 +25,9 @@ $resultsARN = $sn->createTopic([
 ]);
 print("List All Platform Applications:\n");
 $Model = $sn->listTopics();
-foreach ($Model1['Topics'] as $App)
+foreach ($Model1['Topics'] as $mp2)
   {
-    print($App['TopicArn'] . "\n");
+    print($mp2['TopicArn'] . "\n");
   }
   print("\n");
   
