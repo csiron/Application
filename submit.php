@@ -176,7 +176,7 @@ function thumb_create($file, $width , $height ) {
           $im->writeImage( $file );
   
           $im->destroy();
-          return 'THUMB_'.$file;
+          return 'imagemagickthumbnail'.$file;
           
   }
   catch(Exception $e)
