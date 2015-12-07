@@ -79,9 +79,9 @@ $cthumb = $s3->putObject([
     'Key' => $newfile,
     'SourceFile' => $newfile,
 ]);
-$url = $result['ObjectURL'];
+$Rawurl = $result['ObjectURL'];
 echo $Rawurl;
-$finurl = $cthumb['ObjectURL'];
+$finshedurl = $cthumb['ObjectURL'];
 echo $finshedurl;
 $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
@@ -113,12 +113,12 @@ if($num_rows[0] > 0){
   $Uname = $_POST['username'];
   $Email = $_POST['useremail'];
   $Phone = $_POST['phone'];
-  $RawS3 = $Rawurl; //  $result['ObjectURL']; from above
+  $RawS3url = $RawS3; //  $result['ObjectURL']; from above
   $filename = basename($_FILES['userfile']['name']);
-  $finishedS3 = $Finshedurl;
+  $finishedS3url = $finshedS3;
   $status =0;
   $issubscribed=0;
-  mysqli_query($link, "INSERT INTO comments (ID, Uname,Email,Phone,RawS3url,finishedS3url,jpgfile,state,date) VALUES (NULL, '$Uname', '$Email', '$Phone', '$Rawurl', '$finishedurl', '$filename', '$status', NULL)");
+  mysqli_query($link, "INSERT INTO comments (ID, Uname,Email,Phone,RawS3url,finishedS3url,jpgfile,state,date) VALUES (NULL, '$Uname', '$Email', '$Phone', '$RawS3', '$finishedS3', '$filename', '$status', NULL)");
   $results = $link->insert_id;
 
   $subscriberArns = $sn->listSubscriptionsByTopic([
